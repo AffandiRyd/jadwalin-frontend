@@ -4,24 +4,19 @@ import AgendaSekolah from './AgendaSekolah';
 
 const MainContent = () => {
   return (
-    <div className="content-container" style={{ paddingBottom: '50px' }}>
+    <div className="content-container">
       
-      {/* HEADER UTAMA SEKARANG ADA DI SINI (Di luar Info dan Agenda) */}
-      <header style={{ marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#000', marginBottom: '4px' }}>
+      {/* 1. BAGIAN SAMBUTAN */}
+      <div className="welcome-section">
+        <h1 className="welcome-title">
           Halo, Peserta Didik!!
         </h1>
-        <p style={{ fontSize: '14px', fontWeight: '600', color: '#334155' }}>
+        <p className="welcome-subtitle">
           Selamat datang di Jadwal!n, website yang dapat membantu peserta didik SMKN 46 Jakarta.
         </p>
-      </header>
+      </div>
 
-      {/* Panggil komponen Info */}
-      <InfoTerkini />
-
-      {/* Panggil komponen Agenda */}
-      <AgendaSekolah />
-
+      {/* Komponen InfoTerkini dan AgendaSekolah sepertinya bakal dipanggil di sini nantinya */}
     </div>
   );
 };
