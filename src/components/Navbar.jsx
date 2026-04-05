@@ -3,12 +3,12 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
-  const API_LOGIN_URL = '/jadwalin/api/login.php';
-  const API_KELAS_URL = '/jadwalin/api/kelas.php';
-  const API_UBAH_PASSWORD_URL = '/jadwalin/api/ubah_password.php';
-  const API_USERS_URL = '/jadwalin/api/users.php';
-  const API_GURU_URL = '/jadwalin/api/guru.php';
-  const API_MAPEL_URL = '/jadwalin/api/mapel.php';
+  const API_LOGIN_URL = 'http://localhost/jadwalin/api/login.php';
+  const API_KELAS_URL = 'http://localhost/jadwalin/api/kelas.php';
+  const API_UBAH_PASSWORD_URL = 'http://localhost/jadwalin/api/ubah_password.php';
+  const API_USERS_URL = 'http://localhost/jadwalin/api/users.php';
+  const API_GURU_URL = 'http://localhost/jadwalin/api/guru.php';
+  const API_MAPEL_URL = 'http://localhost/jadwalin/api/mapel.php';
 
   const [user, setUser] = useState(null);
 
@@ -237,7 +237,7 @@ const Navbar = () => {
                 </div>
               )}
               <div className="list-container-scroll">
-                {guruList.map((g) => (
+                {[...guruList].sort((a, b) => parseInt(a.id_guru) - parseInt(b.id_guru)).map((g) => (
                   <div key={g.id_guru} className="list-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '1px solid #ddd', gap: '10px' }}>
                     <span style={{ flex: 1, textAlign: 'left', wordBreak: 'break-word', color: '#1e293b' }}><strong className="badge-id" style={{ color: '#555', marginRight: '5px' }}>ID: {g.id_guru}</strong> - {g.nama_guru}</span>
                     {isAdmin && (
@@ -282,7 +282,7 @@ const Navbar = () => {
                 </div>
               )}
               <div className="list-container-scroll">
-                {mapelList.map((m) => (
+                {[...mapelList].sort((a, b) => parseInt(a.id_mapel) - parseInt(b.id_mapel)).map((m) => (
                   <div key={m.id_mapel} className="list-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '1px solid #ddd', gap: '10px' }}>
                     <span style={{ flex: 1, textAlign: 'left', wordBreak: 'break-word', color: '#1e293b' }}><strong className="badge-id" style={{ color: '#555', marginRight: '5px' }}>ID: {m.id_mapel}</strong> - {m.nama_mapel}</span>
                     {isAdmin && (
@@ -403,7 +403,7 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="list-container-scroll-bordered" style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ddd', padding: '10px' }}>
-                {userList.map((u) => (
+                {[...userList].sort((a, b) => parseInt(a.id_user) - parseInt(b.id_user)).map((u) => (
                   <div key={u.id_user} className="list-item-flex" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', borderBottom: '1px solid #eee', paddingBottom: '5px', gap: '10px' }}>
                     <div className="user-info" style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
                       <strong className="user-name" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#1e293b' }}>{u.nama_lengkap} <span className="user-username" style={{ color: '#666', fontWeight: 'normal' }}>({u.username})</span></strong>
@@ -461,7 +461,8 @@ const Navbar = () => {
                 {Object.entries(groupedKelas).map(([tingkat, klsArr]) => (
                   <div key={tingkat} className="class-group" style={{ marginBottom: '15px' }}>
                     <strong className="class-group-title" style={{ display: 'block', background: '#f5f5f5', padding: '5px', marginBottom: '5px', textAlign: 'left', color: '#475569' }}>{tingkat}</strong>
-                    {klsArr.map((kls) => (
+                    {/* Ini yang diurutin isi kelas per tingkatnya */}
+                    {[...klsArr].sort((a, b) => parseInt(a.id_kelas) - parseInt(b.id_kelas)).map((kls) => (
                       <div key={kls.id_kelas} className="list-item-flex-sm" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px 10px', borderBottom: '1px solid #eee', gap: '10px' }}>
                         <span className="class-name" style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: 'left', color: '#1e293b' }}>{kls.nama_kelas}</span>
                         <div className="action-buttons" style={{ display: 'flex', gap: '5px', flexShrink: 0 }}>

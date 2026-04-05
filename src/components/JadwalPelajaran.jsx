@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 const JadwalKelas = () => {
-  const API_URL = '/jadwalin/api/jadwal.php'; 
-  const API_KELAS_URL = '/jadwalin/api/kelas.php';
-  const API_GURU_URL = '/jadwalin/api/guru.php'; 
-  const API_MAPEL_URL = '/jadwalin/api/mapel.php'; 
+  const API_URL = 'http://localhost/jadwalin/api/jadwal.php'; 
+  const API_KELAS_URL = 'http://localhost/jadwalin/api/kelas.php';
+  const API_GURU_URL = 'http://localhost/jadwalin/api/guru.php'; 
+  const API_MAPEL_URL = 'http://localhost/jadwalin/api/mapel.php'; 
 
   const [user, setUser] = useState(null);
   const canEditJadwal = user?.role === 'pengurus';
@@ -116,6 +116,22 @@ const JadwalKelas = () => {
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSave = async () => {
+    // --- TAMBAHAN VALIDASI FRONTEND ---
+    if (!formData.id_mapel || !formData.id_guru) {
+      Swal.fire({ title: "Peringatan!", text: "Mata Pelajaran dan Guru pengajar wajib dipilih!", icon: "warning" });
+      return; // Stop eksekusi, jangan lanjut nge-hit API
+    }
+
+    if (!user?.id_kelas) {
+      Swal.fire({ 
+        title: "Error Kelas!", 
+        text: "Akun ini tidak memiliki ID Kelas. Coba logout dan login kembali.", 
+        icon: "error" 
+      });
+      return; // Stop eksekusi
+    }
+    // ----------------------------------
+
     setIsSaving(true);
     const url = modalType === 'edit' ? `${API_URL}?id=${formData.id_jadwal}` : API_URL;
     const method = modalType === 'edit' ? 'PUT' : 'POST';
@@ -124,6 +140,9 @@ const JadwalKelas = () => {
       ...formData,
       id_kelas: user?.id_kelas 
     };
+
+    // Buat ngecek di inspect element (console) apa data yang beneran dikirim
+    console.log("Data Payload yang dikirim ke PHP:", payload); 
 
     try {
       const response = await fetch(url, {

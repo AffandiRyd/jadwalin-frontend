@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'; 
 
 const AgendaSekolah = () => {
-  const API_URL = '/jadwalin/api/agenda.php'; 
+  const API_URL = 'http://localhost/jadwalin/api/agenda.php'; 
   
   const [user, setUser] = useState(null);
   const canEditAgenda = user?.role === 'admin';

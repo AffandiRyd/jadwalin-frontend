@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'; 
 
 const InfoTerkini = () => {
-  const API_URL = '/jadwalin/api/info'; 
+  const API_URL = 'http://localhost/jadwalin/api/info'; 
   
   const [user, setUser] = useState(null);
   const canEditInfo = user?.role === 'admin';
